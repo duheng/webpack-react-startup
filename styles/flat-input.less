@@ -1,0 +1,65 @@
+@import './variable.less';
+
+.flat-input-wrapper{
+  position : relative;
+  padding : 0;
+  margin : 0;
+  padding-top : 10px;
+}
+.flat-input{
+  border: none;
+  border-bottom: 1px solid #999;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  width : 100%;
+  line-height: 30px;
+  //margin-top : 10px;
+}
+.flat-input-label{
+  position : absolute;
+  left : 0;
+  top : 17px;
+  font-size: 14px;
+  color: #777;
+  transition: all 200ms linear 0ms;
+}
+.flat-input-under-line{
+  position : relative;
+  border-style: none none solid;
+  border-bottom-width: 2px;
+  width: 100%;
+  top: -1px;
+  margin: 0;
+  box-sizing: content-box;
+  height: 0;
+  border-color: @primary;
+  transform: scaleX(0);
+  transition: all 450ms linear 0ms;
+}
+.flat-input-errorMsg{
+  color: @error;
+}
+
+
+.flat-input-wrapper{
+  &.focus, &.with-content{
+    .flat-input-under-line{
+      transform: scaleX(1);
+    }
+    .flat-input-label{
+      font-size: 10px;
+      top: 0;
+    }
+  }
+  &.flat-input-error{
+    .flat-input-under-line{
+      border-color: @error;
+    }
+    //.flat-input{
+    //  color: @error;
+    //}
+    .flat-input-label{
+      color: @error;
+    }
+  }
+}

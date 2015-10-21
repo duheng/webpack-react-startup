@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "the ask project",
   "scripts": {
-    "dev": "webpack-dev-server --devtool eval --hot --progress --colors --content-base dist --port 3000"
+    "dev": "webpack-dev-server --devtool eval-source-map --hot --progress --colors --content-base dist --port 3000"
   },
   "repository": {
     "type": "git"
@@ -30,7 +30,17 @@
     "webpack-dev-server": "^1.8.2"
   },
   "dependencies": {
+    "classnames": "^2.2.0",
+    "material-ui": "^0.12.4",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-addons-create-fragment": "^0.14.0",
+    "react-addons-pure-render-mixin": "^0.14.0",
+    "react-addons-transition-group": "^0.14.0",
+    "react-addons-update": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-redux": "^4.0.0",
+    "react-tap-event-plugin": "^0.2.1",
+    "redux": "^3.0.2",
+    "redux-form": "^2.4.1"
   }
 }

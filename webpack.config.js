@@ -5,7 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  devtool: 'eval',
+  //devtool: 'eval',
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
@@ -33,22 +33,33 @@ module.exports = {
       inject: true
     })
   ],
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.less'],
+    alias: {
+      'style': __dirname + '/styles',
+      'component': __dirname + '/components/',
+      'module': __dirname + '/modules/'
+    }
+  },
   module: {
     loaders: [
       {
         test: /\.jsx$/,
         loaders: ['react-hot', 'babel'],
-        include: path.join(__dirname, 'src')
+        exclude: path.join(__dirname, 'node_modules')
       },
       {
         test: /\.js$/,
         loaders: ['react-hot', 'babel'],
-        include: path.join(__dirname, 'src')
+        exclude: path.join(__dirname, 'node_modules')
       },
       {
         test: /\.less$/,
-        loaders: ['style', 'css', 'less'],
-        include: path.join(__dirname, 'src')
+        loaders: ['style', 'css', 'less']
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css']
       }
     ]
   }
