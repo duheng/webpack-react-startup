@@ -1,36 +1,30 @@
-import React, {Component} from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Router} from 'react-router';
+import AppRoutes from './router.jsx';
+const injectTapEventPlugin = require('react-tap-event-plugin');
+const createHistory = require('history/lib/createHashHistory');
 
-import AppBar from 'material-ui/lib/app-bar';
-import PersonOutline from 'material-ui/lib/svg-icons/social/person-outline.js';
+require('module/bootstrap/bootstrap.css');
 
-import IconMenu from 'material-ui/lib/menus/icon-menu.js';
-import MenuItem from 'material-ui/lib/menus/menu-item.js';
-import MenuDivider from 'material-ui/lib/menus/menu-divider.js';
-import IconButton from 'material-ui/lib/icon-button.js';
+window.React = React;
+window.Perf = require('react-addons-perf');
 
-export default class App extends Component{
+//Needed for onTouchTap
+//Can go away when react 1.0 release
+//Check this repo:
+//https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-
-        let rightIcon = (
-            <IconMenu iconButtonElement={<IconButton><PersonOutline /></IconButton>}>
-                <MenuItem primaryText="test"></MenuItem>
-                <MenuItem primaryText="test2"></MenuItem>
-            </IconMenu>
-        );
-
-        return (
-            <div>
-                <AppBar
-                    title="WebFuture"
-                    iconElementRight={rightIcon}
-                    showMenuIconButton={false}></AppBar>
-            </div>
-        );
-    }
-
-}
+/**
+ * Render the main app component. You can read more about the react-router here:
+ * https://github.com/rackt/react-router/blob/master/docs/guides/overview.md
+ */
+ReactDOM.render(
+    <Router
+        history={createHistory({queryKey: false})}
+        onUpdate={() => window.scrollTo(0, 0)}
+        >
+        {AppRoutes}
+    </Router>
+    , document.getElementById('wrapper'));
