@@ -20,7 +20,7 @@ export default class Layout extends Component{
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <Paper zDepth={1} rounded={false}>
+                            <Paper zDepth={1} rounded={false} style={{marginTop: 20}}>
                                 {this.props.children}
                             </Paper>
                         </div>

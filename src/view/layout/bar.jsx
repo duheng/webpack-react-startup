@@ -7,27 +7,47 @@ import IconMenu from 'material-ui/lib/menus/icon-menu.js';
 import MenuItem from 'material-ui/lib/menus/menu-item.js';
 import IconButton from 'material-ui/lib/icon-button.js';
 
-export default class Layout extends Component{
+import {History} from 'react-router';
 
-    constructor(props) {
-        super(props);
-    }
+let Layout = React.createClass({
+
+    mixins: [History],
+
+    getLoginItem() {
+        return <MenuItem primaryText="登 录" onTouchTap={() => this._go('/login')}></MenuItem>;
+    },
+
+    getLogoutItem() {
+        return <MenuItem primaryText="登 出" onTouchTap={() => this._go('/logout')}></MenuItem>
+    },
+
+    getUserInfoItem() {
+        return <MenuItem primaryText="我的信息" onTouchTap={() => this._go('/user')}></MenuItem>
+    },
 
     render() {
         let rightIcon = (
             <IconMenu iconButtonElement={<IconButton><PersonOutline /></IconButton>}>
-                <MenuItem primaryText="test"></MenuItem>
-                <MenuItem primaryText="test2"></MenuItem>
+                {this.getLoginItem()}
+                {this.getLogoutItem()}
+                {this.getUserInfoItem()}
             </IconMenu>
         );
 
         return (
             <AppBar
-                title="WebFuture"
+                title="Test Material"
                 iconElementRight={rightIcon}
                 showMenuIconButton={false}>
             </AppBar>
         );
+    },
+
+    _go(path, title, query) {
+        console.log(this.context.history);
+        this.context.history.pushState(title, path, query);
     }
 
-}
+});
+
+export default Layout;

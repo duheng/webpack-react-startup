@@ -37,7 +37,7 @@ export default class Search extends Component{
                             floatingLabelText="输入你的问题"
                             style={{width: '100%'}}></TextField>
 
-                        {result}
+
 
                         <RaisedButton label="标签一" style={{marginRight: 10}}></RaisedButton>
                         <RaisedButton label="标签二" style={{marginRight: 10}}></RaisedButton>
