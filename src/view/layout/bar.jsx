@@ -36,7 +36,7 @@ let Layout = React.createClass({
 
         return (
             <AppBar
-                title="Test Material"
+                title="Test Material111"
                 iconElementRight={rightIcon}
                 showMenuIconButton={false}>
             </AppBar>
