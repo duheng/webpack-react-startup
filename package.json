@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "the ask project",
   "scripts": {
-    "dev": "webpack-dev-server --devtool eval-source-map --hot --progress --colors --content-base dist --port 3000"
+    "dev-front": "webpack-dev-server --devtool eval-source-map --hot --progress --colors --content-base dist --port 3000",
+    "dev": "supervisor server.js"
   },
   "repository": {
     "type": "git"
