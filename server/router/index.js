@@ -9,17 +9,17 @@ const util = require('../util');
 
 router.post('/login', function (req, res, next) {
 
-    let email = req.params.email;
-    let password = req.params.password;
-
-    console.log(req.body, req.params);
+    let email = req.body.email;
+    let password = req.body.password;
 
     UserModel.findOne({
         'email': email,
-        'password': password
+        'password': util.md5Password(password)
     }, '_id', function (err, id) {
+        console.log(err, id);
         if (err) next(err);
         if (id) {
+            console.log(id);
             util.success_request(res, {});
         }
         else {
@@ -27,39 +27,58 @@ router.post('/login', function (req, res, next) {
         }
     });
 
-
 });
 
 router.post('/register', function (req, res, next) {
 
-    let email = req.params.email;
-    let password = req.params.password;
+    let email = req.body.email;
+    let password = req.body.password;
 
-    let user = new UserModel({
-        email: email,
-        password: password
-    });
+    if (!email || !password) {
+        util.fail_request(res, '请输入正确的用户名密码');
+        return;
+    }
 
-    user.save(function (err) {
-        if (err) {
-            console.log(err);
-            util.fail_request(res, err.message);
-        } else {
-            util.success_request(res, {});
+    UserModel.find({
+        "email": email
+    }).then(function (pr) {
+        if (pr && pr.length > 0) {
+            util.fail_request(res, '该邮箱已注册');
+        }
+        else {
+            let user = new UserModel({
+                email: email,
+                password: util.md5Password(password, true)
+            });
+
+            user.save(function (err) {
+                if (err) {
+                    util.fail_request(res, err.toString());
+                } else {
+                    util.success_request(res, {});
+                }
+            });
         }
     });
 
 });
 
 router.post('/questions/:page', function (req, res, next) {
+    // 分页显示问题
 
     let page = req.params.page;
 
 });
 
 router.post('/questions/add', function (req, res, next) {
+    // 新增一个问题
 
+    let title = req.body.title;
 
+});
+
+router.post('/search', function (req, res, next) {
+    // 根据关键字搜索问题
 
 });
 

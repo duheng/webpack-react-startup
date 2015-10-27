@@ -1,3 +1,5 @@
+const md5 = require('md5');
+
 exports.success_request = function (res, data) {
 
     res.json({
@@ -13,5 +15,12 @@ exports.fail_request = function (res, msg) {
         success: false,
         msg: msg
     });
+
+};
+
+exports.md5Password = function (password, twice) {
+
+    password = md5(password);
+    return twice ? md5(password) : password;
 
 };
