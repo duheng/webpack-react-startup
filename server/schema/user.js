@@ -8,19 +8,19 @@ module.exports = new Schema({
         type: String,
         validate: {
             validator: function (v) {
-                return v && /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(v);
+                return /^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(v);
             },
             message: '{VALUE} 不是正确的邮箱地址'
         }
     },
     password: {
-        type: String,
-        validate: {
-            validator: function (v) {
-                return v && /^(\w){8,16}$/.test(v);
-            },
-            message: '密码不正确'
-        }
+        type: String
+        //validate: {
+        //    validator: function (v) {
+        //        return /^(\w){8,16}$/.test(v);
+        //    },
+        //    message: '密码不正确'
+        //}
     },
     avatar: String
 
