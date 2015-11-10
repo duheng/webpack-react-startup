@@ -4,12 +4,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router} from 'react-router';
 import AppRoutes from './router.jsx';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-import reducers from './reducer/user.js';
+import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
+import { createHistory } from 'history';
+import thunkMiddleware from 'redux-thunk';
+import {Provider, connect} from 'react-redux';
+import { reduxReactRouter, routerStateReducer, ReduxRouter, pushState } from 'redux-router';
+import user from './reducer/user.js';
+
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
-const createHistory = require('history/lib/createHashHistory');
 
 require('module/bootstrap/bootstrap.css');
 
@@ -35,7 +38,23 @@ global.$ctx = (function () {
 
 }());
 
-let store = global.store = createStore(reducers);
+const reducer = combineReducers({
+    router: routerStateReducer,
+    user
+});
+
+const createStoreWithMiddleware = applyMiddleware(
+  thunkMiddleware // lets us dispatch() functions
+)(createStore);
+
+const store = compose(
+  applyMiddleware(thunkMiddleware),
+  reduxReactRouter({
+      createHistory
+  })
+)(createStore)(reducer);
+
+//let store = global.store = createStoreWithMiddleware(reducers);
 
 /**
  * Render the main app component. You can read more about the react-router here:
@@ -43,11 +62,13 @@ let store = global.store = createStore(reducers);
  */
 ReactDOM.render(
     <Provider store={store}>
-        <Router
-            history={createHistory({queryKey: false})}
-            onUpdate={() => window.scrollTo(0, 0)}
-            >
-            {AppRoutes}
-        </Router>
+        <ReduxRouter>
+            <Router
+              history={createHistory({queryKey: false})}
+              onUpdate={() => window.scrollTo(0, 0)}
+              >
+                {AppRoutes}
+            </Router>
+        </ReduxRouter>
     </Provider>
     , document.getElementById('wrapper'));

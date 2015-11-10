@@ -15,11 +15,11 @@ router.post('/login', function (req, res, next) {
     UserModel.findOne({
         'email': email,
         'password': util.md5Password(password)
-    }, '_id', function (err, id) {
-        console.log(err, id);
+    }, function (err, user) {
         if (err) next(err);
-        if (id) {
-            console.log(id);
+        if (user) {
+            req.session.user = user;
+            req.session.save();
             util.success_request(res, {});
         }
         else {
@@ -46,6 +46,15 @@ router.post('/register', function (req, res, next) {
             util.fail_request(res, '该邮箱已注册');
         }
         else {
+            req.app.get('transport').sendMail({
+                from: "Jokcy ✔ <postmaster@sandbox96229.mailgun.org>", // sender address
+                to: email, // list of receivers
+                subject: "Hello ✔", // Subject line
+                text: "Hello world ✔", // plaintext body
+                html: "<b>Hello world ✔</b>" // html body
+            }, function(error, resp) {
+                console.log(error, resp);
+            });
             let user = new UserModel({
                 email: email,
                 password: util.md5Password(password, true)

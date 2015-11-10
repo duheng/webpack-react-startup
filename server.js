@@ -6,9 +6,19 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 const logger = require('morgan');
+const mailer = require('nodemailer');
 
 // create the app object
 let app = express();
+
+
+app.set('transport', mailer.createTransport({
+    service: "Mailgun",
+    auth: {
+        user: "postmaster@sandbox96229.mailgun.org",
+        pass: "8os-j1p0uxh0"
+    }
+}));
 
 mongoose.connect('mongodb://localhost/asks');
 
@@ -27,8 +37,8 @@ mongoose.connect('mongodb://localhost/asks');
 //}
 
 // middleware usage
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(session({
     resave: false,

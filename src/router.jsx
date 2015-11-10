@@ -11,7 +11,7 @@ export default (
         <Redirect from="/" to="/home"></Redirect>
         <Route path="home" component={QuestionList}></Route>
         <Route path="user" component={User}></Route>
-        <Route path="login" component={Login}></Route>
+        <Route path="login(/:status)" component={Login}></Route>
     </Route>
 );
 

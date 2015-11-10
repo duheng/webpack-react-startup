@@ -1,11 +1,10 @@
 'use strict';
 
-import {LOGIN, LOGIN_SUCCESS, LOGIN_FAIL} from '../action/user.js';
+import {LOGIN, REGISTER, LOGIN_SUCCESS, LOGIN_FAIL} from '../action/user.js';
 
 let defaultUser = {
     email: '',
-    avatar: '',
-    nick_name: ''
+    avatar: ''
 };
 
 /**
@@ -20,20 +19,22 @@ export default function user(state = defaultUser, action = {}) {
     switch (action.type) {
         case LOGIN:
             return Object.assign({}, state, {
-                fetching: true,
+                syncing: true
+            });
+        case REGISTER:
+            return Object.assign({}, state, {
+                syncing: true
             });
         case LOGIN_SUCCESS:
             return Object.assign({}, state, {
-                user: action.user,
-                fetching: false,
-                success: true,
-                fail_msg: ''
+                user: action.payload.user,
+                syncing: false,
+                error_msg: ''
             });
         case LOGIN_FAIL:
             return Object.assign({}, state, {
-                fetching: false,
-                success: false,
-                fail_msg: action.msg
+                syncing: false,
+                error_msg: action.payload.msg
             });
         default :
             return state || {};
