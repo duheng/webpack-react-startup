@@ -22,20 +22,6 @@ app.set('transport', mailer.createTransport({
 
 mongoose.connect('mongodb://localhost/asks');
 
-// 开发环境设置
-//if (app.get('env') === 'development') {
-//    // 如果是开发模式则开启前端开发模式
-//    const webpackDevMiddleware = require('webpack-dev-middleware');
-//    const webpack = require('webpack');
-//    let config = require('./webpack.config.js');
-//    let compiler = webpack(config);
-//    app.use(webpackDevMiddleware(compiler, {
-//        hot:true,
-//        publicPath: config.output.publicPath
-//    }));
-//    app.use(logger('dev'));
-//}
-
 // middleware usage
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
